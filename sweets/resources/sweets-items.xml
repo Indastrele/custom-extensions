@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+ ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="CandyList" elementtype="Candy" autocreate="true" generate="false" type="list"/>
+	</collectiontypes>
+
+	<enumtypes>
+		<enumtype code="PackageSize" generate="true" dynamic="false" autocreate="true">
+			<value code="SMALL"/>
+			<value code="MEDIUM"/>
+			<value code="LARGE"/>
+		</enumtype>
+
+		<enumtype code="Flavor" generate="true" dynamic="true" autocreate="true">
+			<value code="SWEET"/>
+			<value code="BITTER"/>
+			<value code="SOUR"/>
+		</enumtype>
+	</enumtypes>
+
+	<maptypes>
+		<maptype code="LabelToCandyMap" argumenttype="java.lang.String" returntype="Candy" autocreate="true" generate="false"/>
+	</maptypes>
+
+	<relations>
+		<relation code="Supplier2BoxRel" generate="false" autocreate="true" localized="false">
+			<sourceElement type="Supplier" qualifier="supplier" cardinality="one">
+				<modifiers read="true" write="true" optional="false"/>
+			</sourceElement>
+			<targetElement type="Box" qualifier="boxes" cardinality="many" collectiontype="list" ordered="true">
+				<modifiers read="true" write="true" optional="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="Supplier2CandyRel" generate="false" autocreate="true" localized="false">
+			<deployment table="Supplier2Candy" typecode="30016" />
+			<sourceElement type="Supplier" qualifier="supplier" cardinality="many" collectiontype="set" ordered="false">
+				<modifiers read="true" write="true" optional="true"/>
+			</sourceElement>
+			<targetElement type="Candy" qualifier="suppliedCandies" cardinality="many" collectiontype="list" ordered="true">
+				<modifiers read="true" write="true" optional="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="Box2CandyRel" generate="false" autocreate="true" localized="false">
+			<sourceElement type="Box" qualifier="box" cardinality="one">
+				<modifiers read="true" write="true" optional="false"/>
+			</sourceElement>
+			<targetElement type="Candy" qualifier="candies" cardinality="many" collectiontype="list" ordered="true">
+				<modifiers read="true" write="true" optional="true" partof="false"/>
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<itemtype code="Candy" extends="GenericItem" autocreate="true" generate="false">
+			<deployment table="Candy" typecode="30015" />
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<modifiers read="true" write="true" optional="false" search="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="flavor" type="Flavor">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="Box" extends="Product" autocreate="true" generate="false">
+			<attributes>
+				<attribute qualifier="extraCandies" type="CandyList">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="labelsMap" type="LabelToCandyMap">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="packageSize" type="PackageSize">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="label" type="java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+		<itemtype code="SupplierInfo" extends="GenericItem" autocreate="true" generate="false">
+			<deployment table="SupplierInfo" typecode="30013" />
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<modifiers read="true" write="true" optional="false" search="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="contactName" type="java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="contactEmail" type="java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="supplier" type="Supplier">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="Supplier" extends="GenericItem" autocreate="true" generate="false">
+			<deployment table="Supplier" typecode="30014" />
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<modifiers read="true" write="true" optional="false" search="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="name" type="java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="info" type="SupplierInfo">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

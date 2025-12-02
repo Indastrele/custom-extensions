@@ -1,0 +1,27 @@
+INSERT_UPDATE Catalog;id[unique=true];name[lang=en];defaultCatalog
+;default;Default Catalog;true
+
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active
+;default;Staged;true
+;default;Online;false
+
+INSERT_UPDATE Flavor;code[unique=true];name[lang=en]
+;SWEET;Sweet
+;SOUR;Sour
+
+INSERT_UPDATE PackageSize;code[unique=true];name[lang=en]
+;MEDIUM;Medium Package
+;LARGE;Large Package
+
+INSERT_UPDATE Supplier;code[unique=true];name
+;supplier001;Candy Master Inc.
+
+INSERT_UPDATE Box;code[unique=true];catalogVersion(catalog(id),version)[unique=true];name[lang=en];packageSize(code);supplier(code)
+;sweets_box001;default:Staged;Mixed Flavors Box;LARGE;supplier001
+
+INSERT_UPDATE Candy;code[unique=true];flavor(code);box(code)
+;sweet_candy001;SWEET;sweets_box001
+;sour_candy002;SOUR;sweets_box001
+
+UPDATE Box;code[unique=true];extraCandies(code)
+;sweets_box002;sweet_candy001,sour_candy002
