@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<itemtypes>
+		<itemtype code="SupplierInfo" extends="GenericItem" autocreate="true" generate="false">
+			<deployment table="SupplierInfo" typecode="30013" />
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<modifiers read="true" write="true" optional="false" search="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="contactName" type="java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="contactEmail" type="java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="supplier" type="Supplier">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="Supplier" extends="GenericItem" autocreate="true" generate="false">
+			<deployment table="Supplier" typecode="30014" />
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<modifiers read="true" write="true" optional="false" search="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="name" type="java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="info" type="SupplierInfo">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

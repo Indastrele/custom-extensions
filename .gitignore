@@ -23,7 +23,7 @@ hs_err_pid*
 target
 
 # Intellij Idea
-.idea
+*/.idea
 *.iml
 
 # Eclipse
@@ -33,3 +33,10 @@ target
 *.xsd
 *.build.number
 
+.settings
+.externalToolBuilders
+gensrc
+platformhome.properties
+
+copy.sh
+move.sh
